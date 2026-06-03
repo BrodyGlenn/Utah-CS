@@ -1,11 +1,12 @@
 import { TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Typography } from "@mui/material";
 import { FC, useContext, useEffect, useState } from "react";
 import Store from "../Interface/Store2";
-import { DataContext } from "../App2"; 
+import { DataContext } from "../App2";
 import { observer } from "mobx-react-lite";
 import styled from "@emotion/styled";
 import { format } from "d3-format";
-import AttributeChart from "../Components/CellComponents/AttributeChart2";
+//import AttributeChart from "../Components/CellComponents/AttributeChart2";
+import AttributeChart from "../Components/CellComponents/AttributeChart";
 import { Percent } from "@mui/icons-material";
 import PercentageChart2 from "./CellComponents/PercentageChart2";
 
@@ -130,13 +131,13 @@ const StateTable: FC<StateTableProps> = ({ categoryColor }) => {
                 shouldInclude = categoryFromRow === store.courseCategory;
             }
 
-            if (!shouldInclude) return; 
+            if (!shouldInclude) return;
 
             const processBlock = (startIndex: number) => {
                 const val = Number(row[startIndex]) || 0;
                 if (val === 0) return;
                 total += val;
-                
+
                 const isFem = genderLabel === 'Girls';
                 const isMale = genderLabel === 'Boys';
                 if (isFem) fTotal += val;
@@ -157,8 +158,8 @@ const StateTable: FC<StateTableProps> = ({ categoryColor }) => {
 
                 addStat('native', 1); addStat('asian', 2); addStat('black', 3);
                 addStat('hispanic', 4); addStat('pacific', 5); addStat('twoOrMore', 6);
-                addStat('white', 7); 
-                addSpec('disability', 8); 
+                addStat('white', 7);
+                addSpec('disability', 8);
                 addSpec('ecoDis', 10);
                 addSpec('engLearner', 11);
             };
@@ -195,7 +196,7 @@ const StateTable: FC<StateTableProps> = ({ categoryColor }) => {
                             {/* This is where the total 9-12 number will be displayed 
                             {format(",")(popStats.total) } high school students 
                             {/*render with box*/}
-                            <PercentageChart2 actualVal={popStats.total} percentage={1}/>
+                            <PercentageChart2 actualVal={popStats.total} percentage={1} />
                         </StateTableCell>
                         <StateTableCell>
                             {/* This is where the gender breakdown will be displayed for total student pop */}
@@ -206,7 +207,7 @@ const StateTable: FC<StateTableProps> = ({ categoryColor }) => {
                         </StateTableCell>
                         <StateTableCell>
                             {/* This is where the race breakdown will be displayed for total student pop */}
-                            <AttributeChart title="Total Students" data={popStats.race} totalStudentNum={popStats.total} />
+                            {/* <AttributeChart title="Total Students" data={popStats.race} totalStudentNum={popStats.total} /> */}
                         </StateTableCell>
                         <StateTableCell>
                             {/* This is where the econ disadavantaged breakdown will be displayed for total student pop */}
@@ -227,8 +228,8 @@ const StateTable: FC<StateTableProps> = ({ categoryColor }) => {
 
                     <TableRow sx={{ backgroundColor: 'rgba(0, 0, 0, 0.03)' }}>
                         <StateTableCell component="th" scope="row">
-                            <div style={{ 
-                                fontWeight: 'bold', 
+                            <div style={{
+                                fontWeight: 'bold',
                                 color: categoryColor,
                                 borderBottom: `2px solid ${categoryColor}`,
                                 display: 'inline-block'
@@ -240,20 +241,26 @@ const StateTable: FC<StateTableProps> = ({ categoryColor }) => {
                             </Typography>
                         </StateTableCell>
                         <StateTableCell>
-                           { /* <div style={{ fontWeight: 'bold' }}>{format(",")(csStats.total)}</div> */ }
+                            { /* <div style={{ fontWeight: 'bold' }}>{format(",")(csStats.total)}</div> */}
                             <PercentageChart2 actualVal={csStats.total} percentage={getPercentage(csStats.total, popStats.total)} />
                             <div style={{ fontSize: '0.75rem', color: '#666' }}>
-                              { /* ({format(".2%")(popStats.total > 0 ? csStats.total / popStats.total : 0)} of HS) */ }
-                                
+                                { /* ({format(".2%")(popStats.total > 0 ? csStats.total / popStats.total : 0)} of HS) */}
+
                             </div>
                         </StateTableCell>
                         <StateTableCell>
-                             <div style={{ fontSize: '0.85rem', lineHeight: 1.4 }}>
+                            <div style={{ fontSize: '0.85rem', lineHeight: 1.4 }}>
+                                <AttributeChart option='gender' keyIdentity="State Total"
+                            outputObj={{
+                                male: csStats.gender.male,
+                                female: csStats.gender.female,
+                            }} />
                                 <div><strong>Female:</strong> {formatSimple(csStats.gender.female, csStats.total)}</div>
                                 <div><strong>Male:</strong> {formatSimple(csStats.gender.male, csStats.total)}</div>
                             </div>
                         </StateTableCell>
                         <StateTableCell>
+                            {/*
                             <AttributeChart 
                                 title={`${store.courseCategory} Enrollment`} 
                                 data={csStats.race} 
@@ -261,17 +268,19 @@ const StateTable: FC<StateTableProps> = ({ categoryColor }) => {
                                 comparisonData={popStats.race}
                                 comparisonTotal={popStats.total}
                             />
+                            */}
+                            
                         </StateTableCell>
                         <StateTableCell>
-                           { /* {formatSimple(csStats.special.ecoDis.total, csStats.total)} */ }
+                            { /* {formatSimple(csStats.special.ecoDis.total, csStats.total)} */}
                             <PercentageChart2 actualVal={csStats.special.ecoDis.total} percentage={getPercentage(csStats.special.ecoDis.total, csStats.total)} />
                         </StateTableCell>
                         <StateTableCell>
-                           { /* {formatSimple(csStats.special.disability.total, csStats.total)} */ }
+                            { /* {formatSimple(csStats.special.disability.total, csStats.total)} */}
                             <PercentageChart2 actualVal={csStats.special.disability.total} percentage={getPercentage(csStats.special.disability.total, csStats.total)} />
                         </StateTableCell>
                         <StateTableCell>
-                            { /* {formatSimple(csStats.special.engLearner.total, csStats.total)} */ }
+                            { /* {formatSimple(csStats.special.engLearner.total, csStats.total)} */}
                             <PercentageChart2 actualVal={csStats.special.engLearner.total} percentage={getPercentage(csStats.special.engLearner.total, csStats.total)} />
                         </StateTableCell>
                     </TableRow>
