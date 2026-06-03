@@ -6,6 +6,8 @@ import { observer } from "mobx-react-lite";
 import styled from "@emotion/styled";
 import { format } from "d3-format";
 import AttributeChart from "../Components/CellComponents/AttributeChart2";
+import { Percent } from "@mui/icons-material";
+import PercentageChart2 from "./CellComponents/PercentageChart2";
 
 const StateTableCell = styled(TableCell)({
     paddingTop: '10px',
@@ -54,6 +56,17 @@ const StateTable: FC<StateTableProps> = ({ categoryColor }) => {
         if (store.showPercentage) return format(".2%")(total > 0 ? val / total : 0);
         return format(",")(val);
     };
+
+    {/* This method needs to return the percentage for a percentage chart
+        but there is a problem when the val is n<10 */}
+    const getPercentage = (val: string | number, total: string | number) => {
+
+        const a = Number(val)
+        const b = Number(total)
+        return b === 0 ? 0 : a / b;
+        //if (total === 0) return 0;
+        //return format(".2%")(total > 0 ? val / total : 0);
+    }
 
     useEffect(() => {
         const currentYearRows = statePopData[store.schoolYearShowing] || [];
@@ -179,20 +192,37 @@ const StateTable: FC<StateTableProps> = ({ categoryColor }) => {
                             </Typography>
                         </StateTableCell>
                         <StateTableCell>
-                            {format(",")(popStats.total)}
+                            {/* This is where the total 9-12 number will be displayed 
+                            {format(",")(popStats.total) } high school students 
+                            {/*render with box*/}
+                            <PercentageChart2 actualVal={popStats.total} percentage={1}/>
                         </StateTableCell>
                         <StateTableCell>
+                            {/* This is where the gender breakdown will be displayed for total student pop */}
                             <div style={{ fontSize: '0.85rem', lineHeight: 1.4 }}>
                                 <div><strong>Female:</strong> {formatSimple(popStats.gender.female, popStats.total)}</div>
                                 <div><strong>Male:</strong> {formatSimple(popStats.gender.male, popStats.total)}</div>
                             </div>
                         </StateTableCell>
                         <StateTableCell>
+                            {/* This is where the race breakdown will be displayed for total student pop */}
                             <AttributeChart title="Total Students" data={popStats.race} totalStudentNum={popStats.total} />
                         </StateTableCell>
-                        <StateTableCell>{formatSimple(popStats.special.ecoDis.total, popStats.total)}</StateTableCell>
-                        <StateTableCell>{formatSimple(popStats.special.disability.total, popStats.total)}</StateTableCell>
-                        <StateTableCell>{formatSimple(popStats.special.engLearner.total, popStats.total)}</StateTableCell>
+                        <StateTableCell>
+                            {/* This is where the econ disadavantaged breakdown will be displayed for total student pop */}
+                            {/* {formatSimple(popStats.special.ecoDis.total, popStats.total)} */}
+                            <PercentageChart2 actualVal={popStats.special.ecoDis.total} percentage={getPercentage(popStats.special.ecoDis.total, popStats.total)} />
+                        </StateTableCell>
+                        <StateTableCell>
+                            {/* This is where the disability breakdown will be displayed for total student pop */}
+                            {/*  {formatSimple(popStats.special.disability.total, popStats.total)} */}
+                            <PercentageChart2 actualVal={popStats.special.disability.total} percentage={getPercentage(popStats.special.disability.total, popStats.total)} />
+                        </StateTableCell>
+                        <StateTableCell>
+                            {/* This is where the English learner breakdown will be displayed for total student pop */}
+                            {/* {formatSimple(popStats.special.engLearner.total, popStats.total)} */}
+                            <PercentageChart2 actualVal={popStats.special.engLearner.total} percentage={getPercentage(popStats.special.engLearner.total, popStats.total)} />
+                        </StateTableCell>
                     </TableRow>
 
                     <TableRow sx={{ backgroundColor: 'rgba(0, 0, 0, 0.03)' }}>
@@ -210,9 +240,11 @@ const StateTable: FC<StateTableProps> = ({ categoryColor }) => {
                             </Typography>
                         </StateTableCell>
                         <StateTableCell>
-                            <div style={{ fontWeight: 'bold' }}>{format(",")(csStats.total)}</div>
+                           { /* <div style={{ fontWeight: 'bold' }}>{format(",")(csStats.total)}</div> */ }
+                            <PercentageChart2 actualVal={csStats.total} percentage={getPercentage(csStats.total, popStats.total)} />
                             <div style={{ fontSize: '0.75rem', color: '#666' }}>
-                                ({format(".2%")(popStats.total > 0 ? csStats.total / popStats.total : 0)} of HS)
+                              { /* ({format(".2%")(popStats.total > 0 ? csStats.total / popStats.total : 0)} of HS) */ }
+                                
                             </div>
                         </StateTableCell>
                         <StateTableCell>
@@ -230,9 +262,18 @@ const StateTable: FC<StateTableProps> = ({ categoryColor }) => {
                                 comparisonTotal={popStats.total}
                             />
                         </StateTableCell>
-                        <StateTableCell>{formatSimple(csStats.special.ecoDis.total, csStats.total)}</StateTableCell>
-                        <StateTableCell>{formatSimple(csStats.special.disability.total, csStats.total)}</StateTableCell>
-                        <StateTableCell>{formatSimple(csStats.special.engLearner.total, csStats.total)}</StateTableCell>
+                        <StateTableCell>
+                           { /* {formatSimple(csStats.special.ecoDis.total, csStats.total)} */ }
+                            <PercentageChart2 actualVal={csStats.special.ecoDis.total} percentage={getPercentage(csStats.special.ecoDis.total, csStats.total)} />
+                        </StateTableCell>
+                        <StateTableCell>
+                           { /* {formatSimple(csStats.special.disability.total, csStats.total)} */ }
+                            <PercentageChart2 actualVal={csStats.special.disability.total} percentage={getPercentage(csStats.special.disability.total, csStats.total)} />
+                        </StateTableCell>
+                        <StateTableCell>
+                            { /* {formatSimple(csStats.special.engLearner.total, csStats.total)} */ }
+                            <PercentageChart2 actualVal={csStats.special.engLearner.total} percentage={getPercentage(csStats.special.engLearner.total, csStats.total)} />
+                        </StateTableCell>
                     </TableRow>
                 </TableBody>
             </Table>

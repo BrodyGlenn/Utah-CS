@@ -83,7 +83,7 @@ export const App = () => {
     // console.log(store)
 
     const [courseData, setCourseData] = useState<CourseDataStore | null>(null);
-
+// Where colors are rendered and defined under constant2.tsx 
     const categoryColor = useMemo(() => {
         if (store.courseCategory === "CS Total") return ColorPalette[0];
         if (store.courseCategory === "CS Foundational") return ColorPalette[9];
