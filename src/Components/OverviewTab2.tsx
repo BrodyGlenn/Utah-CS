@@ -13,14 +13,17 @@ const OverviewGridItem = styled(Grid)({
     flexDirection: 'column'
 });
 
+//cards for the overview tab, used to show the total number of schools, students, and courses in the state as well as a description of the tab.
 const OverviewCard: FC<{ mainText: ReactNode, subText: ReactNode }> = ({ mainText, subText }) => (
     <div style={{
         backgroundColor: 'white', border: '1px solid #ddd', padding: '22px',
         height: '100%', boxSizing: 'border-box', borderRadius: '4px',
-        display: 'flex', flexDirection: 'column', justifyContent: 'center'
+        display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center'
     }}>
-        <div style={{ fontSize: '0.95rem', color: '#444', marginBottom: '12px', lineHeight: 1.4 }}>{mainText}</div>
+        
         {subText !== null && <div style={{ fontSize: '2.8rem', fontWeight: 800 }}>{subText}</div>}
+        <div style={{ fontSize: '0.95rem', color: '#444', marginBottom: '12px', lineHeight: 1.4 }}>{mainText}</div>
+
     </div>
 );
 
@@ -148,21 +151,21 @@ const OverviewTab: FC<Props> = ({ categoryColor }) => {
 
                         <OverviewGridItem xs={6}>
                             <OverviewCard
-                                mainText={<span>{store.courseCategory} Courses</span>}
+                                mainText={<span>{store.getCourseCategoryAndLevelString()} Courses</span>}
                                 subText={<span style={{ color: categoryColor }}>{uniqueCourseCount}</span>}
                             />
                         </OverviewGridItem>
 
                         <OverviewGridItem xs={6}>
                             <OverviewCard
-                                mainText={<span>Schools <b>Offering</b> {store.courseCategory} Courses</span>}
+                                mainText={<span>Schools <b>Offering</b> {store.getCourseCategoryAndLevelString()} Courses</span>}
                                 subText={<span style={{ color: categoryColor }}>{schoolsOfferingCount}</span>}
                             />
                         </OverviewGridItem>
 
                         <OverviewGridItem xs={6}>
                             <OverviewCard
-                                mainText={<span>Students <b>Participating</b> in {store.courseCategory} Courses</span>}
+                                mainText={<span>Students <b>Participating</b> in {store.getCourseCategoryAndLevelString()} Courses</span>}
                                 subText={
                                     <span style={{ color: categoryColor, fontSize: store.showPercentage ? '3.2rem' : '2.8rem' }}>
                                         {store.showPercentage
@@ -178,7 +181,7 @@ const OverviewTab: FC<Props> = ({ categoryColor }) => {
                 <Grid xs={12} md={6} sx={{ display: 'flex', flexDirection: 'column' }}>
                     <div style={{ padding: '10px', flex: 1, display: 'flex', flexDirection: 'column' }}>
                         <div style={{ textAlign: 'center', color: categoryColor, fontWeight: 'bold', marginBottom: '15px', fontSize: '1.15rem' }}>
-                            Percentage of Students in {store.courseCategory} by District for {year}
+                            Percentage of Students in {store.getCourseCategoryAndLevelString()} by District for {year}
                         </div>
                         <div style={{
                             flex: 1,

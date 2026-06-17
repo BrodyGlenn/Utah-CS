@@ -5,10 +5,11 @@ import { DataContext } from "../App2";
 import { observer } from "mobx-react-lite";
 import styled from "@emotion/styled";
 import { format } from "d3-format";
-//import AttributeChart from "../Components/CellComponents/AttributeChart2";
-import AttributeChart from "../Components/CellComponents/AttributeChart";
+import AttributeChart from "../Components/CellComponents/AttributeChart2";
+
 import { Percent } from "@mui/icons-material";
 import PercentageChart2 from "./CellComponents/PercentageChart2";
+import AttributeDialog from "./CellComponents/AttributeDialog2";
 
 const StateTableCell = styled(TableCell)({
     paddingTop: '10px',
@@ -68,6 +69,7 @@ const StateTable: FC<StateTableProps> = ({ categoryColor }) => {
         //if (total === 0) return 0;
         //return format(".2%")(total > 0 ? val / total : 0);
     }
+     const [openGenderDialog, setOpenGenderDialog] = useState(false);
 
     useEffect(() => {
         const currentYearRows = statePopData[store.schoolYearShowing] || [];
@@ -248,15 +250,16 @@ const StateTable: FC<StateTableProps> = ({ categoryColor }) => {
 
                             </div>
                         </StateTableCell>
-                        <StateTableCell>
+                        <StateTableCell  onClick={() => setOpenGenderDialog(true)} style={{color:'blue', textDecoration:'underline'}}>
                             <div style={{ fontSize: '0.85rem', lineHeight: 1.4 }}>
                                 <AttributeChart option='gender' keyIdentity="State Total"
                             outputObj={{
-                                male: csStats.gender.male,
                                 female: csStats.gender.female,
+                                male: csStats.gender.male,
+                                
                             }} />
-                                <div><strong>Female:</strong> {formatSimple(csStats.gender.female, csStats.total)}</div>
-                                <div><strong>Male:</strong> {formatSimple(csStats.gender.male, csStats.total)}</div>
+                                {/* <div><strong>Female:</strong> {formatSimple(csStats.gender.female, csStats.total)}</div>
+                                <div><strong>Male:</strong> {formatSimple(csStats.gender.male, csStats.total)}</div> */}
                             </div>
                         </StateTableCell>
                         <StateTableCell>
@@ -286,6 +289,17 @@ const StateTable: FC<StateTableProps> = ({ categoryColor }) => {
                     </TableRow>
                 </TableBody>
             </Table>
+
+            <AttributeDialog option='Gender' openDialog={openGenderDialog}
+                        setDialogVisibility={(bol: boolean) => setOpenGenderDialog(bol)}
+                        CSAttributeOutput={{
+                            male: csStats.gender.male,
+                            female: csStats.gender.female
+                        }}
+                        stateAttributeOutput={{
+                            male: popStats.gender.male,
+                            female: popStats.gender.female
+                        }} />
         </TableContainer>
     );
 };

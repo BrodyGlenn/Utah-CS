@@ -64,6 +64,7 @@ const StateTable: FC = () => {
                             percentage={1} />
                     </StateTableCell>
                     <StateTableCell onClick={() => setOpenGenderDialog(true)} style={{color:'blue', textDecoration:'underline'}}>
+                        { /* This is where the attribute chart for the gender is made for the total student population. */ }
                         <AttributeChart option='gender' keyIdentity="State Total"
                             outputObj={{
                                 male: stateAttributeFinder('TOTAL: Male'),

@@ -31,5 +31,6 @@ export const CourseCategoryColor: { [key: string]: string; } = {
     CSA: '#6D95CE', //ADVANCED CS
     CSB: '#253D81', //BASIC CS
     CSC: '#A01F35', //CORE CS
-    CS: '#DD9505' //ALL CS
+    // CS: '#DD9505' //ALL CS
+    CS: '#946200' //ALL CS
 };

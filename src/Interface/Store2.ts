@@ -22,6 +22,16 @@ export class AppStore {
         makeAutoObservable(this);
     }
 
+    
+    getCourseCategoryAndLevelString() {
+
+        if (this.courseLevel === 'Basic' || this.courseLevel === 'Advanced') {
+            return `${this.courseCategory} ${this.courseLevel}`;
+        }
+
+        return `${this.courseCategory}`;
+    }
+
     updateSchoolYear(newYearEntry: string) {
         this.schoolYearShowing = newYearEntry;
     }
