@@ -200,13 +200,20 @@ const StateTable: FC<StateTableProps> = ({ categoryColor }) => {
                             {/*render with box*/}
                             <PercentageChart2 actualVal={popStats.total} percentage={1} />
                         </StateTableCell>
-                        <StateTableCell>
-                            {/* This is where the gender breakdown will be displayed for total student pop */}
+                        <StateTableCell  onClick={() => setOpenGenderDialog(true)} style={{color:'blue', textDecoration:'underline'}}>
                             <div style={{ fontSize: '0.85rem', lineHeight: 1.4 }}>
-                                <div><strong>Female:</strong> {formatSimple(popStats.gender.female, popStats.total)}</div>
-                                <div><strong>Male:</strong> {formatSimple(popStats.gender.male, popStats.total)}</div>
+                                <AttributeChart option='gender' keyIdentity="State Total"
+                            outputObj={{
+                                female: popStats.gender.female,
+                                male: popStats.gender.male,
+                                
+                            }} />
+                                {/* <div><strong>Female:</strong> {formatSimple(csStats.gender.female, csStats.total)}</div>
+                                <div><strong>Male:</strong> {formatSimple(csStats.gender.male, csStats.total)}</div> */}
                             </div>
                         </StateTableCell>
+                         {/* <div><strong>Female:</strong> {formatSimple(popStats.gender.female, popStats.total)}</div>
+                                <div><strong>Male:</strong> {formatSimple(popStats.gender.male, popStats.total)}</div> */}
                         <StateTableCell>
                             {/* This is where the race breakdown will be displayed for total student pop */}
                             {/* <AttributeChart title="Total Students" data={popStats.race} totalStudentNum={popStats.total} /> */}

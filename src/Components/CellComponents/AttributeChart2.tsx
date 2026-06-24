@@ -2,7 +2,7 @@ import { FC, useEffect, useState, useContext } from "react";
 import { RaceDictionary, GenderDictionary } from "../../Preset/Constants";
 import styled from "@emotion/styled";
 import { observer } from "mobx-react-lite";
-import Store from "../../Interface/Store";
+import Store from "../../Interface/Store2";
 import { computeTextOutcome } from "./PercentageChart";
 import { sum } from "d3-array";
 
@@ -63,7 +63,7 @@ const AttributeChart: FC<Props> = ({ option, keyIdentity, outputObj }: Props) =>
 };
 
 const SmallerText = styled.span({
-    fontSize: 'smaller',
+    fontSize: '13.6px',
 });
 
 export default observer(AttributeChart);

@@ -6,7 +6,7 @@ export const PossibleSchoolYears = [
 ];
 
 export const PossibleCategories = [
-    { name: 'All CS TEST', key: 'CST', shortName: 'Total CS' },
+    { name: 'All CS TEST', key: 'CST', shortName: 'ALL CS TEST' },
     { name: 'All CS TEST Basic', key: 'CST-B', shortName: 'Total Basic CS' },
      { name: 'CS Total Advanced', key: 'CST-A', shortName: 'Total Advanced CS' },
 
