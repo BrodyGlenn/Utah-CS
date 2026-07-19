@@ -128,8 +128,8 @@ const SchoolTable: FC<{ categoryColor: string }> = observer(({ categoryColor }) 
                             
                             <TextCell style={{ fontSize: '0.8rem', color: '#555', lineHeight: '1.4' }}>
                                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                    <span><span style={{ fontWeight: 'bold' }}>Male:</span> <span style={{ color: '#1e88e5' }}>{s.csBoys === 0 ? 'n<10' : s.csBoys}</span></span>
-                                    <span><span style={{ fontWeight: 'bold' }}>Female:</span> <span style={{ color: '#d81b60' }}>{s.csGirls === 0 ? 'n<10' : s.csGirls}</span></span>
+                                    <span><span style={{ fontWeight: 'bold' }}>Male:</span> <span style={{ color: '#555' }}>{s.csBoys === 0 ? 'n<10' : s.csBoys}</span></span>
+                                    <span><span style={{ fontWeight: 'bold' }}>Female:</span> <span style={{ color: '#555' }}>{s.csGirls === 0 ? 'n<10' : s.csGirls}</span></span>
                                 </div>
                             </TextCell>
                         </TableRow>

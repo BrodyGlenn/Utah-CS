@@ -69,7 +69,9 @@ const StateTable: FC<StateTableProps> = ({ categoryColor }) => {
         //if (total === 0) return 0;
         //return format(".2%")(total > 0 ? val / total : 0);
     }
-     const [openGenderDialog, setOpenGenderDialog] = useState(false);
+    const [openGenderDialog, setOpenGenderDialog] = useState(false);
+
+    const [openRaceDialog, setOpenRaceDialog] = useState(false);
 
     useEffect(() => {
         const currentYearRows = statePopData[store.schoolYearShowing] || [];
@@ -191,7 +193,7 @@ const StateTable: FC<StateTableProps> = ({ categoryColor }) => {
                     <TableRow>
                         <StateTableCell component="th" scope="row">
                             <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-                                Total 9-12 Student Population
+                                Total 9-12 Student Population ADDED BOTH RACE BREAKDOWN TRY 3
                             </Typography>
                         </StateTableCell>
                         <StateTableCell>
@@ -200,24 +202,39 @@ const StateTable: FC<StateTableProps> = ({ categoryColor }) => {
                             {/*render with box*/}
                             <PercentageChart2 actualVal={popStats.total} percentage={1} />
                         </StateTableCell>
-                        <StateTableCell  onClick={() => setOpenGenderDialog(true)} style={{color:'blue', textDecoration:'underline'}}>
+                        <StateTableCell onClick={() => setOpenGenderDialog(true)} style={{ color: 'blue', textDecoration: 'underline' }}>
                             <div style={{ fontSize: '0.85rem', lineHeight: 1.4 }}>
                                 <AttributeChart option='gender' keyIdentity="State Total"
-                            outputObj={{
-                                female: popStats.gender.female,
-                                male: popStats.gender.male,
-                                
-                            }} />
-                                {/* <div><strong>Female:</strong> {formatSimple(csStats.gender.female, csStats.total)}</div>
-                                <div><strong>Male:</strong> {formatSimple(csStats.gender.male, csStats.total)}</div> */}
+                                    outputObj={{
+                                        female: popStats.gender.female,
+                                        male: popStats.gender.male,
+
+                                    }} />
+
                             </div>
                         </StateTableCell>
-                         {/* <div><strong>Female:</strong> {formatSimple(popStats.gender.female, popStats.total)}</div>
+                        {/* <div><strong>Female:</strong> {formatSimple(popStats.gender.female, popStats.total)}</div>
                                 <div><strong>Male:</strong> {formatSimple(popStats.gender.male, popStats.total)}</div> */}
-                        <StateTableCell>
-                            {/* This is where the race breakdown will be displayed for total student pop */}
-                            {/* <AttributeChart title="Total Students" data={popStats.race} totalStudentNum={popStats.total} /> */}
+
+                        {/*RACE BREAKDOW*/}
+                        <StateTableCell onClick={() => setOpenRaceDialog(true)} style={{ color: 'blue', textDecoration: 'underline' }}>
+                            <div style={{ fontSize: '0.85rem', lineHeight: 1.4 }}>
+                                <AttributeChart option='race' keyIdentity="State Total"
+                                    outputObj={{
+                                        white: popStats.race.white.total,
+                                        hispanic: popStats.race.hispanic.total,
+                                        asian: popStats.race.asian.total,
+                                        black: popStats.race.black.total,
+                                        native: popStats.race.native.total,
+                                        other: popStats.race.twoOrMore.total,
+                                        pacific: popStats.race.pacific.total,
+
+                                    }} />
+                                {/* This is where the race breakdown will be displayed for total student pop */}
+                                {/* <AttributeChart title="Total Students" data={popStats.race} totalStudentNum={popStats.total} /> */}
+                            </div>
                         </StateTableCell>
+
                         <StateTableCell>
                             {/* This is where the econ disadavantaged breakdown will be displayed for total student pop */}
                             {/* {formatSimple(popStats.special.ecoDis.total, popStats.total)} */}
@@ -257,20 +274,34 @@ const StateTable: FC<StateTableProps> = ({ categoryColor }) => {
 
                             </div>
                         </StateTableCell>
-                        <StateTableCell  onClick={() => setOpenGenderDialog(true)} style={{color:'blue', textDecoration:'underline'}}>
+                        <StateTableCell onClick={() => setOpenGenderDialog(true)} style={{ color: 'blue', textDecoration: 'underline' }}>
                             <div style={{ fontSize: '0.85rem', lineHeight: 1.4 }}>
                                 <AttributeChart option='gender' keyIdentity="State Total"
-                            outputObj={{
-                                female: csStats.gender.female,
-                                male: csStats.gender.male,
-                                
-                            }} />
+                                    outputObj={{
+                                        female: csStats.gender.female,
+                                        male: csStats.gender.male,
+
+                                    }} />
                                 {/* <div><strong>Female:</strong> {formatSimple(csStats.gender.female, csStats.total)}</div>
                                 <div><strong>Male:</strong> {formatSimple(csStats.gender.male, csStats.total)}</div> */}
                             </div>
                         </StateTableCell>
-                        <StateTableCell>
-                            {/*
+
+                        <StateTableCell onClick={() => setOpenRaceDialog(true)} style={{ color: 'blue', textDecoration: 'underline' }}>
+                            <div style={{ fontSize: '0.85rem', lineHeight: 1.4 }}>
+                                <AttributeChart option='race' keyIdentity="CS"
+                                    outputObj={{
+                                        white: csStats.race.white.total,
+                                        hispanic: csStats.race.hispanic.total,
+                                        asian: csStats.race.asian.total,
+                                        black: csStats.race.black.total,
+                                        native: csStats.race.native.total,
+                                        other: csStats.race.twoOrMore.total,
+                                        pacific: csStats.race.pacific.total,
+
+                                    }} />
+                                {/* This is where the race breakdown will be displayed for specific classes */}
+                                {/*
                             <AttributeChart 
                                 title={`${store.courseCategory} Enrollment`} 
                                 data={csStats.race} 
@@ -279,8 +310,9 @@ const StateTable: FC<StateTableProps> = ({ categoryColor }) => {
                                 comparisonTotal={popStats.total}
                             />
                             */}
-                            
+                            </div>
                         </StateTableCell>
+
                         <StateTableCell>
                             { /* {formatSimple(csStats.special.ecoDis.total, csStats.total)} */}
                             <PercentageChart2 actualVal={csStats.special.ecoDis.total} percentage={getPercentage(csStats.special.ecoDis.total, csStats.total)} />
@@ -298,15 +330,36 @@ const StateTable: FC<StateTableProps> = ({ categoryColor }) => {
             </Table>
 
             <AttributeDialog option='Gender' openDialog={openGenderDialog}
-                        setDialogVisibility={(bol: boolean) => setOpenGenderDialog(bol)}
-                        CSAttributeOutput={{
-                            male: csStats.gender.male,
-                            female: csStats.gender.female
-                        }}
-                        stateAttributeOutput={{
-                            male: popStats.gender.male,
-                            female: popStats.gender.female
-                        }} />
+                setDialogVisibility={(bol: boolean) => setOpenGenderDialog(bol)}
+                CSAttributeOutput={{
+                    male: csStats.gender.male,
+                    female: csStats.gender.female
+                }}
+                stateAttributeOutput={{
+                    male: popStats.gender.male,
+                    female: popStats.gender.female
+                }} />
+            <AttributeDialog option='Race' openDialog={openRaceDialog}
+                setDialogVisibility={(bol: boolean) => setOpenRaceDialog(bol)}
+                CSAttributeOutput={{
+                    white: csStats.race.white.total,
+                    hispanic: csStats.race.hispanic.total,
+                    asian: csStats.race.asian.total,
+                    black: csStats.race.black.total,
+                    native: csStats.race.native.total,
+                    other: csStats.race.twoOrMore.total,
+                    pacific: csStats.race.pacific.total,
+                }}
+                stateAttributeOutput={{
+                    white: popStats.race.white.total,
+                    hispanic: popStats.race.hispanic.total,
+                    asian: popStats.race.asian.total,
+                    black: popStats.race.black.total,
+                    native: popStats.race.native.total,
+                    other: popStats.race.twoOrMore.total,
+                    pacific: popStats.race.pacific.total,
+                }} />
+
         </TableContainer>
     );
 };

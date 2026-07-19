@@ -10,11 +10,12 @@ interface TabsComponentProps {
 
 const TabsComponent: FC<TabsComponentProps> = ({ tabVal, tabChange, categoryColor }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const labels = ["Overview", "District & School Data", "Statewide Trends"];
+    const labels = ["OVERVIEW", "DISTRICT & SCHOOL DATA", "STATEWIDE TRENDS"];
 
     return (
         <Box sx={{ width: '100%', borderBottom: 1, borderColor: 'divider' }}>
             <Hidden mdUp>
+                {/* tabs for lower section of the screen */}
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: 1 }}>
                     <Typography sx={{ fontWeight: 700, color: categoryColor }}>
                         {labels[tabVal]}

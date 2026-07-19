@@ -13,6 +13,7 @@ import TabsComponent from "./Components/TabsComponent/Tabs2";
 import OverviewTab from "./Components/OverviewTab2";
 import SchoolTable from "./Components/SchoolComponent/SchoolTable2";
 import DistrictTable from "./Components/DistrictComponent/DistrictTable2";
+import Footer from "./Components/Footer";
 
 export const SectionTitle = styled(Typography)({
     color: '#2f1600',
@@ -404,7 +405,7 @@ export const App = () => {
                                     }}>
                                         District List
                                     </div>
-                                    <DistrictTable categoryColor={categoryColor} />
+                                    <DistrictTable categoryColor={categoryColor} />    
                                 </Grid>
 
                                 <Grid xs={12} md={6}>
@@ -426,8 +427,9 @@ export const App = () => {
                         {tabVal === 2 && <Box sx={placeholderStyle}>Trends Placeholder</Box>}
                     </Box>
                 </Box>
-
+                <Footer />
             </div>
+
         </DataContext.Provider>
     );
 

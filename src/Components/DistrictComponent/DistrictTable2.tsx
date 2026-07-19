@@ -161,8 +161,8 @@ const DistrictTable: FC<{ categoryColor: string }> = observer(({ categoryColor }
                             
                             <TextCell style={{ fontSize: '0.8rem', color: '#555', lineHeight: '1.4' }}>
                                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                    <span><span style={{ fontWeight: 'bold' }}>Male:</span> <span style={{ color: '#1e88e5' }}>{d.csBoys === 0 ? 'n<10' : d.csBoys}</span></span>
-                                    <span><span style={{ fontWeight: 'bold' }}>Female:</span> <span style={{ color: '#d81b60' }}>{d.csGirls === 0 ? 'n<10' : d.csGirls}</span></span>
+                                    <span><span style={{ fontWeight: 'bold' }}>Male:</span> <span style={{ color: '#555' }}>{d.csBoys === 0 ? 'n<10' : d.csBoys}</span></span>
+                                    <span><span style={{ fontWeight: 'bold' }}>Female:</span> <span style={{ color: '#555' }}>{d.csGirls === 0 ? 'n<10' : d.csGirls}</span></span>
                                 </div>
                             </TextCell>
                         </TableRow>
